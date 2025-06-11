@@ -44,7 +44,7 @@ local_resource(
   # --- Build Go binary   ---
   export CGO_ENABLED=0
   export GOOS=linux
-  go build -o ../.tilt/cluster-agent ./cluster-agent/cmd/main.go
+  go build -gcflags=all="-N -l" -o ../.tilt/cluster-agent ./cluster-agent/cmd/main.go
   ''',
   deps=[
     './modules/cluster-agent',
@@ -169,10 +169,8 @@ docker_build_with_restart(
 # apply manifests
 k8s_yaml('hack/tilt/kubetail.yaml')
 k8s_yaml('hack/tilt/loggen.yaml')
-k8s_yaml('hack/tilt/loggen-ansi.yaml')
 k8s_yaml('hack/tilt/echoserver.yaml')
 k8s_yaml('hack/tilt/cronjob.yaml')
-k8s_yaml('hack/tilt/chaoskube.yaml')
 
 # define resources
 k8s_resource(
@@ -234,16 +232,16 @@ k8s_resource(
   new_name='kubetail-cli',
 )
 
-k8s_resource(
-  'chaoskube',
-  objects=[
-    'chaoskube:serviceaccount',
-    'chaoskube:clusterrole',
-    'chaoskube:clusterrolebinding',
-    'chaoskube:role',
-    'chaoskube:rolebinding'
-  ]
-)
+#k8s_resource(
+#  'chaoskube',
+#  objects=[
+#    'chaoskube:serviceaccount',
+#    'chaoskube:clusterrole',
+#    'chaoskube:clusterrolebinding',
+#    'chaoskube:role',
+#    'chaoskube:rolebinding'
+#  ]
+#)
 
 k8s_resource(
   'echoserver',

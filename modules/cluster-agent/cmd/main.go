@@ -17,6 +17,7 @@ package main
 import (
 	"context"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"strings"
@@ -37,6 +38,8 @@ import (
 	"github.com/kubetail-org/kubetail/modules/cluster-agent/internal/server"
 	"github.com/kubetail-org/kubetail/modules/cluster-agent/internal/services/logmetadata"
 	"github.com/kubetail-org/kubetail/modules/cluster-agent/internal/services/logrecords"
+
+	_ "net/http/pprof"
 )
 
 type CLI struct {
@@ -47,6 +50,10 @@ type CLI struct {
 func main() {
 	var cli CLI
 	var params []string
+
+	go func() {
+		http.ListenAndServe("0.0.0.0:6060", nil)
+	}()
 
 	// init cobra command
 	cmd := cobra.Command{

@@ -444,6 +444,8 @@ spec:
       - name: kubetail-cluster-agent
         image: kubetail-cluster-agent
         ports:
+        - name: pprof
+          containerPort: 6060
         - name: grpc
           protocol: TCP
           containerPort: 50051

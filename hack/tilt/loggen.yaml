@@ -12,7 +12,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: loggen
       app.kubernetes.io/instance: kubetail-dev-1
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   template:
     metadata:
@@ -23,5 +23,6 @@ spec:
     spec:
       containers:
       - name: loggen
-        image: docker.io/kubetail/loggen:0.1.2
+        image: docker.io/kubetail/loggen:0.2.0
+        args: ["--interval=10ms", "--jitter=0ms"]
         resources: {}

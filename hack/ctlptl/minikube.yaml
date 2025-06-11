@@ -9,5 +9,5 @@ product: minikube
 registry: ctlptl-registry
 minikube:
   startFlags:
-    - --nodes=3
+    - --nodes=1
     - --addons=metrics-server

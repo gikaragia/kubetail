@@ -59,5 +59,7 @@ COPY --from=rustbuilder /lib64/ld-linux-x86-64.so.2 /lib64/
 
 COPY .tilt/cluster-agent .
 
+EXPOSE 6060
+
 ENTRYPOINT ["./cluster-agent"]
 CMD []
